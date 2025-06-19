@@ -1,0 +1,114 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the Tempest Pet Mat editions from Pexpedition's Franklin Collection, designed for extreme climates.">
+    <title>Tempest Pet Mat - Pexpedition</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lora', serif; background-color: #F7F9FC; color: #0A1C2B; line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Cinzel', serif; }
+        .product-image { width: 100%; height: 300px; object-fit: cover; border-radius: 12px; }
+    </style>
+</head>
+<body>
+    <nav class="bg-gray-900 text-white p-4">
+        <a href="/" class="text-xl font-bold">Pexpedition</a>
+    </nav>
+    <div class="container mx-auto py-10">
+        <h1 class="text-4xl font-bold text-center mb-8">Tempest Pet Mat</h1>
+        <p class="text-center mb-6 text-gray-700">A thermal mat with Icebound Mode (-10°C to +35°C), inspired by a sailor’s blanket.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <img src="/assets/images/mat-erebus.jpg" alt="Erebus Edition Tempest Pet Mat" class="product-image" loading="lazy">
+                <h2 class="text-2xl font-bold mt-4">Erebus Edition</h2>
+                <p class="mb-2">Design: Charcoal gray wool, rubber base.<br>Materials: Wool, rubber.<br>Price: $480 CAD.<br>Limited to 25 units.</p>
+                <button class="snipcart-add-item pre-order-button w-full mt-2"
+                    data-item-id="mat-erebus"
+                    data-item-price="480.00"
+                    data-item-url="/products/mat"
+                    data-item-name="Tempest Pet Mat (Erebus Edition)"
+                    data-item-image="/assets/images/mat-erebus.jpg"
+                    data-item-description="Charcoal gray wool, rubber base."
+                    data-item-custom1-name="Embroidery"
+                    data-item-custom1-type="text"
+                    data-item-custom1-required="false">Pre-Order</button>
+            </div>
+            <div class="text-center">
+                <img src="/assets/images/mat-terror.jpg" alt="Terror Edition Tempest Pet Mat" class="product-image" loading="lazy">
+                <h2 class="text-2xl font-bold mt-4">Terror Edition</h2>
+                <p class="mb-2">Design: Steel gray fleece, silicone base.<br>Materials: Fleece, silicone.<br>Price: $650 CAD.<br>Limited to 25 units.</p>
+                <button class="snipcart-add-item pre-order-button w-full mt-2"
+                    data-item-id="mat-terror"
+                    data-item-price="650.00"
+                    data-item-url="/products/mat"
+                    data-item-name="Tempest Pet Mat (Terror Edition)"
+                    data-item-image="/assets/images/mat-terror.jpg"
+                    data-item-description="Steel gray fleece, silicone base."
+                    data-item-custom1-name="Embroidery"
+                    data-item-custom1-type="text"
+                    data-item-custom1-required="false">Pre-Order</button>
+            </div>
+            <div class="text-center">
+                <img src="/assets/images/mat-franklin.jpg" alt="Franklin Edition Tempest Pet Mat" class="product-image" loading="lazy">
+                <h2 class="text-2xl font-bold mt-4">Franklin Edition</h2>
+                <p class="mb-2">Design: Navy sharkskin, leather trim.<br>Materials: Sharkskin, leather.<br>Price: $900 CAD.<br>Limited to 25 units.</p>
+                <button class="snipcart-add-item pre-order-button w-full mt-2"
+                    data-item-id="mat-franklin"
+                    data-item-price="900.00"
+                    data-item-url="/products/mat"
+                    data-item-name="Tempest Pet Mat (Franklin Edition)"
+                    data-item-image="/assets/images/mat-franklin.jpg"
+                    data-item-description="Navy sharkskin, leather trim."
+                    data-item-custom1-name="Embroidery"
+                    data-item-custom1-type="text"
+                    data-item-custom1-required="false">Pre-Order</button>
+            </div>
+        </div>
+        <a href="/" class="block text-center mt-8 text-blue-600 hover:text-blue-800">Back to Collection</a>
+    </div>
+    <script src="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.js"></script>
+    <div hidden id="snipcart" data-api-key="YOUR_SNIPCART_API_KEY" data-config-modal-style="side"></div>
+</body>
+</html>

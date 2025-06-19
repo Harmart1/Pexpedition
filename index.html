@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Pexpedition offers luxury pet accessories inspired by the Franklin Expedition, designed for expedition enthusiasts.">
+    <meta name="keywords" content="luxury pet accessories, Franklin Expedition, expedition yachts, pet travel gear">
+    <title>Pexpedition - Luxury Pet Accessories</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            background-color: #F7F9FC;
+            color: #0A1C2B;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+        }
+        .hero {
+            position: relative;
+            background: url('assets/images/franklin-arctic.jpg') no-repeat center center;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            text-align: center;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(10, 28, 43, 0.3), rgba(10, 28, 43, 0.6));
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-top: 50px;
+        }
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(10, 28, 43, 0.7);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+        .nav.scrolled {
+            background-color: rgba(10, 28, 43, 0.9);
+        }
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+        }
+        .nav-menu a {
+            color: #FFFFFF;
+            margin: 0 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .nav-menu a:hover {
+            color: #C4A55A;
+        }
+        .hamburger {
+            display: none;
+            color: #C4A55A;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .product-card {
+            background-color: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            transition: transform 0.4s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+        .pre-order-button {
+            background-color: #C4A55A;
+            color: #0A1C2B;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            min-width: 44px;
+            min-height: 44px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .pre-order-button:hover {
+            background-color: #A68B3F;
+            transform: translateY(-2px);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #C4A55A;
+            color: #0A1C2B;
+            padding: 10px;
+            border-radius: 50%;
+            display: none;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+        .back-to-top.show {
+            display: block;
+        }
+        .spinner {
+            border: 4px solid #F7F9FC;
+            border-top: 4px solid #C4A55A;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 50px;
+                left: 0;
+                width: 100%;
+                background-color: rgba(10, 28, 43, 0.9);
+                padding: 1rem;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .hamburger {
+                display: block;
+            }
+            .hero {
+                height: 60vh;
+            }
+            .product-image {
+                height: 200px;
+            }
+            .pre-order-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container mx-auto flex justify-between items-center h-12">
+            <h1 class="text-xl font-bold text-white"><img src="/assets/images/pexpedition-logo.png" alt="Pexpedition Logo" class="h-8" loading="lazy"></h1>
+            <div class="hamburger md:hidden cursor-pointer">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu hidden md:flex space-x-6 items-center">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#mission">Our Mission</a></li>
+                <li><a href="#products">Franklin Collection</a></li>
+                <li><a href="#franklin-expedition">Franklin Expedition</a></li>
+                <li><a href="#gallery">History</a></li>
+                <li><a href="#pre-order">Pre-Order</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#" class="snipcart-checkout"><i class="fas fa-shopping-cart"></i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero" data-aos="fade-up" data-aos-duration="1000">
+        <div class="hero-content">
+            <h2 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">Franklin Expedition Collection</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Limited Edition Pet Accessories Inspired by the 1846 Arctic Voyage</p>
+            <a href="#products" class="pre-order-button">Discover the Collection</a>
+        </div>
+    </section>
+
+    <!-- Our Mission Section -->
+    <section id="mission" class="py-20 bg-gray-50" data-aos="fade-up" data-aos-delay="200">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="text-4xl font-bold mb-8">Our Mission</h2>
+            <p class="text-lg text-gray-700">At Pexpedition, we craft luxury pet accessories inspired by historical expeditions, designed for high-net-worth individuals who embark on extreme adventures with their pets. Our products combine durability, style, and functionality to ensure your pet’s comfort in the harshest climates.</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20" data-aos="fade-up" data-aos-delay="300">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center">Franklin Collection</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="product-card" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="/assets/images/sanctuary.jpg" alt="Expedition Pet Sanctuary with titanium frame" class="product-image" loading="lazy">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold mb-3">Expedition Pet Sanctuary</h3>
+                        <p class="mb-4 text-gray-600">A cocoon-style bed with Icebound Mode, inspired by an officer’s bed frame.</p>
+                        <a href="/products/sanctuary.html" class="pre-order-button w-full">View Editions</a>
+                    </div>
+                </div>
+                <div class="product-card" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="/assets/images/pod.jpg" alt="Voyager Pet Pod with frosted resin" class="product-image" loading="lazy">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold mb-3">Voyager Pet Pod</h3>
+                        <p class="mb-4 text-gray-600">A portable carrier with Icebound Mode, inspired by a brass telescope.</p>
+                        <a href="/products/pod.html" class="pre-order-button w-full">View Editions</a>
+                    </div>
+                </div>
+                <div class="product-card" data-aos="zoom-in" data-aos-delay="300">
+                    <img src="/assets/images/mat.jpg" alt="Tempest Pet Mat with sharkskin fabric" class="product-image" loading="lazy">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold mb-3">Tempest Pet Mat</h3>
+                        <p class="mb-4 text-gray-600">A thermal mat with Icebound Mode, inspired by a sailor’s blanket.</p>
+                        <a href="/products/mat.html" class="pre-order-button w-full">View Editions</a>
+                    </div>
+                </div>
+                <div class="product-card" data-aos="zoom-in" data-aos-delay="400">
+                    <img src="/assets/images/bowl.jpg" alt="Navigator Pet Bowl with abalone base" class="product-image" loading="lazy">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold mb-3">Navigator Pet Bowl</h3>
+                        <p class="mb-4 text-gray-600">A dual-compartment bowl with Icebound Protection, inspired by a pewter mess tin.</p>
+                        <a href="/products/bowl.html" class="pre-order-button w-full">View Editions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Franklin Expedition Section -->
+    <section id="franklin-expedition" class="py-20 bg-gray-50" data-aos="fade-up" data-aos-delay="400">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-10 text-center">The Franklin Expedition: A Legacy of Resilience</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Historical Overview</h3>
+                        <p>In 1845, Sir John Franklin led an expedition to navigate the Northwest Passage. HMS Erebus and HMS Terror became icebound in 1846 near King William Island, leading to the loss of all 129 crew after Franklin’s death in 1847.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Crew Resilience</h3>
+                        <p>The crew’s determination shone through as they trekked south, enduring starvation and resorting to cannibalism, evidenced by bone cut marks, in a bid to survive the Arctic’s harshness.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Learn More</h3>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li><a href="https://www.pc.gc.ca/en/culture/franklin" class="text-blue-600 hover:text-blue-800">Parks Canada</a></li>
+                            <li><a href="https://www.rom.on.ca/en/exhibitions-galleries/exhibitions/the-franklin-exploration" class="text-blue-600 hover:text-blue-800">Royal Ontario Museum</a></li>
+                            <li><a href="https://www.bbc.com/news/world-us-canada-54136455" class="text-blue-600 hover:text-blue-800">BBC News</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/HMS_Erebus_and_Terror.jpg" alt="HMS Erebus and Terror in Arctic ice" class="w-full h-64 object-cover rounded-lg shadow-md" loading="lazy">
+                        <p class="text-sm mt-2 text-center text-gray-600">HMS Erebus and Terror (Public Domain)</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Archaeological Discoveries</h3>
+                        <p>HMS Erebus was discovered in 2014, and HMS Terror in 2016, yielding artifacts like the Erebus bell and tools, with DNA identifying crew like James Fitzjames.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Current Excavations</h3>
+                        <p>Parks Canada, with Inuit guidance, uses advanced technology to explore the wrecks, recovering artifacts and identifying remains, preserving this historic site.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20" data-aos="fade-up" data-aos-delay="500">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center">The Franklin Expedition Legacy</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/HMS_Erebus_and_Terror.jpg" alt="HMS Erebus and Terror" class="gallery w-full h-64 object-cover rounded-lg" loading="lazy">
+                    <p class="text-sm mt-2 text-gray-600">HMS Erebus and Terror (Public Domain)</p>
+                </div>
+                <div class="text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Franklin_Telescope.jpg" alt="Franklin Expedition Telescope" class="gallery w-full h-64 object-cover rounded-lg" loading="lazy">
+                    <p class="text-sm mt-2 text-gray-600">Recovered telescope (Public Domain)</p>
+                </div>
+                <div class="text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Sir_John_Franklin.jpg" alt="Sir John Franklin" class="gallery w-full h-64 object-cover rounded-lg" loading="lazy">
+                    <p class="text-sm mt-2 text-gray-600">Sir John Franklin (Public Domain)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pre-Order Info Section -->
+    <section id="pre-order" class="py-20 bg-gray-50" data-aos="fade-up" data-aos-delay="600">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="text-4xl font-bold mb-8">Pre-Order Information</h2>
+            <p class="text-lg mb-6 text-gray-700">The Franklin Collection is limited to 100 units (25 per product), available for pre-order starting September 12, 2025. Delivery: November 15–December 15, 2025. Secure your exclusive piece today.</p>
+            <a href="#products" class="pre-order-button">Pre-Order Now</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20" data-aos="fade-up" data-aos-delay="700">
+        <div class="container mx-auto max-w-2xl text-center">
+            <h2 class="text-4xl font-bold mb-8">Contact Us</h2>
+            <form action="https://formspree.io/f/your-form-id" method="POST" class="space-y-6">
+                <input type="text" name="name" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-C4A55A" required>
+                <input type="email" name="email" placeholder="Your Email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-C4A55A" required>
+                <textarea name="message" placeholder="Your Message" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-C4A55A" rows="4" required></textarea>
+                <button type="submit" class="pre-order-button w-full">Send Message</button>
+            </form>
+            <p class="mt-6 text-gray-600">Email: <a href="mailto:info@pexpedition.com" class="text-blue-600 hover:text-blue-800">info@pexpedition.com</a></p>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6 text-center">
+        <p class="text-sm">© 2025 Pexpedition. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/snipcart@3.0.0/dist/snipcart.min.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // Navigation Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Hamburger Menu Toggle
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Back to Top Button
+        window.addEventListener('scroll', () => {
+            document.getElementById('back-to-top').classList.toggle('show', window.scrollY > 300);
+        });
+        document.getElementById('back-to-top').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Snipcart Spinner
+        document.querySelectorAll('.snipcart-add-item').forEach(button => {
+            button.addEventListener('click', () => {
+                const spinner = document.createElement('div');
+                spinner.className = 'spinner';
+                button.appendChild(spinner);
+                setTimeout(() => spinner.remove(), 1000);
+            });
+        });
+    </script>
+    <div hidden id="snipcart" data-api-key="YOUR_SNIPCART_API_KEY" data-config-modal-style="side"></div>
+</body>
+</html>
