@@ -23,9 +23,10 @@
         }
         .hero {
             position: relative;
-            background: url('assets/images/franklin-arctic.jpg') no-repeat center center;
+            background: url('assets/images/franklin-arctic.jpg') no-repeat center center; /* Fallback background image */
             background-size: cover;
             height: 100vh;
+            overflow: hidden; /* To contain the absolutely positioned video */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -42,9 +43,19 @@
             background: linear-gradient(rgba(10, 28, 43, 0.3), rgba(10, 28, 43, 0.6));
             z-index: 1;
         }
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: 0; /* Behind the hero::before overlay and hero-content */
+        }
         .hero-content {
             position: relative;
-            z-index: 2;
+            z-index: 2; /* Ensure content is above video and overlay */
             padding-top: 50px;
         }
         .nav {
@@ -206,6 +217,18 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero" data-aos="fade-up" data-aos-duration="1000">
+        <!--
+            IMPORTANT:
+            1. The video file is referenced from the root of the repository.
+            2. It is STRONGLY recommended to rename the video file to remove spaces and special characters
+               for better web compatibility (e.g., 'firefly_arctic_scene_1846.mp4').
+               The current filename with spaces ('/1750334521532_Firefly A hauntingly beautiful, ethereal scene set in the frozen Arctic silence of 1846, inspired by.mp4')
+               can cause issues in some browsers or servers. Consider moving it to an 'assets/videos/' directory as well.
+        -->
+        <video autoplay loop muted playsinline class="hero-video">
+            <source src="/1750334521532_Firefly A hauntingly beautiful, ethereal scene set in the frozen Arctic silence of 1846, inspired by.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         <div class="hero-content">
             <h2 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">Franklin Expedition Collection</h2>
             <p class="text-xl mb-8 max-w-2xl mx-auto">Limited Edition Pet Accessories Inspired by the 1846 Arctic Voyage</p>
