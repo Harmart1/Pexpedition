@@ -353,10 +353,19 @@
     <section id="contact" class="py-20" data-aos="fade-up" data-aos-delay="700">
         <div class="container mx-auto max-w-2xl text-center">
             <h2 class="text-4xl font-bold mb-8">Connect With Pexpedition</h2>
-            <!-- IMPORTANT: Replace "your-form-id" with your actual Formspree form ID -->
-            <form action="https://formspree.io/f/your-form-id" method="POST" class="space-y-6">
+            <!--
+                Contact form configured for Basin.co.
+                IMPORTANT:
+                1. Sign up for a free account at https://usebasin.com
+                2. Create a new form endpoint in your Basin dashboard.
+                3. Replace 'YOUR_BASIN_ENDPOINT_URL_HERE' below with the actual URL provided by Basin.
+            -->
+            <form action="YOUR_BASIN_ENDPOINT_URL_HERE" method="POST" class="space-y-6">
                 <input type="text" name="name" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-C4A55A" required>
                 <input type="email" name="email" placeholder="Your Email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-C4A55A" required>
+                <!-- For Basin, you can add a special field to set the reply-to email.
+                     It's often `_replyto` or check Basin's docs for current best practice.
+                     For now, the 'email' field will be used by default. -->
                 <textarea name="message" placeholder="Your Message" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-C4A55A" rows="4" required></textarea>
                 <button type="submit" class="pre-order-button w-full">Send Inquiry</button>
             </form>
