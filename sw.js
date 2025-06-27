@@ -4,11 +4,12 @@ self.addEventListener('install', (event) => {
             return cache.addAll([
                 '/',
                 '/index.html',
-                '/products/sanctuary.html',
-                '/products/pod.html',
-                '/products/mat.html',
-                '/products/bowl.html',
-                '/assets/images/*'
+                '/products_sanctuary.html',
+                '/products_pod.html',
+                '/products_mat.html',
+                '/products_bowl.html'
+                // '/assets/images/pexpedition-logo.png', // Example: Add specific, critical images
+                // '/assets/images/franklin-arctic.jpg'  // Example: Add specific, critical images
             ]);
         })
     );
